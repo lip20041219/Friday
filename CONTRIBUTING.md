@@ -1,4 +1,4 @@
-# Contributing to J.A.R.V.I.S.
+# Contributing to F.R.I.D.A.Y
 
 First off — thanks for being here. FRIDAY is a local-first AI mission control, and
 it gets better every time someone adds a tool, a HUD panel, a voice, or a model
