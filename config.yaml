@@ -151,7 +151,7 @@ model:
   temperature: 0.3
   max_tokens: 16384
   request_timeout_seconds: 180
-  native_tool_calls: true
+  native_tool_calls: false
   reasoning_effort: none
 
 image_model:

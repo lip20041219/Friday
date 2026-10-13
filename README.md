@@ -32,6 +32,11 @@ your own GPU, remembers everything across sessions, and commands your PC through
 
 ![F.R.I.D.A.Y. HUD](docs/images/dashboard.png)
 
+<!-- Dot-matrix art: holographic interface aesthetic -->
+<p align="center">
+  <img src="docs/images/dot-face.png" alt="Dot-matrix hologram" width="600" />
+</p>
+
 </div>
 
 ---
@@ -54,6 +59,11 @@ FRIDAY: "Right away, sir."  →  FLUX renders the image  →  TRELLIS lifts it i
         rotatable GLB hologram in the Media Bay. ~Seconds, fully local, on your GPU.
 ```
 
+<!-- Dot-matrix art: desktop interface -->
+<p align="center">
+  <img src="docs/images/dot-desktop.png" alt="Dot-matrix desktop" width="500" />
+</p>
+
 ---
 
 ## 🌌 Why FRIDAY?
@@ -67,6 +77,11 @@ Cloud assistants rent you intelligence and read your data. FRIDAY doesn't.
 - **🪟 Yours to hack** — open, plugin-based, fully inspectable. Add a new tool in a single file.
 
 > The whole point: an assistant as capable as the cloud ones — that you actually **own**.
+
+<!-- Dot-matrix art: local hardware, circuits -->
+<p align="center">
+  <img src="docs/images/dot-circuit.png" alt="Dot-matrix circuits" width="600" />
+</p>
 
 ---
 
@@ -84,6 +99,11 @@ Cloud assistants rent you intelligence and read your data. FRIDAY doesn't.
 | 🤖 **Agent swarm** | A 9-role agent matrix with an autonomous plan→execute→reflect loop, plus delegation to Claude Code / Codex / OpenCode. |
 | 🪟 **The HUD** | Arc-reactor core, voice-reactive orb, parallax depth, boot sequence, live terminal — React + Three.js. |
 | 🔒 **Safe by design** | SAFE / CAUTION / DANGEROUS tool tiers, a hard denylist, action logs, and automatic edit backups. |
+
+<!-- Dot-matrix art: edgy aesthetic -->
+<p align="center">
+  <img src="docs/images/dot-skull.png" alt="Dot-matrix skull" width="400" />
+</p>
 
 ---
 

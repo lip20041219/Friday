@@ -1,26 +1,25 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useStore } from "../../lib/store";
 
 export default function BootSequence() {
   const booted = useStore((s) => s.booted);
   const setBooted = useStore((s) => s.setBooted);
-  const [progress, setProgress] = useState(0);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoEnded, setVideoEnded] = useState(false);
 
   useEffect(() => {
     if (booted) return;
-    const t = setInterval(() => {
-      setProgress((p) => {
-        if (p >= 100) {
-          clearInterval(t);
-          setTimeout(() => setBooted(true), 400);
-          return 100;
-        }
-        return p + 2;
-      });
-    }, 30);
-    return () => clearInterval(t);
+    // Fallback: force boot after 55 seconds max
+    const fallback = setTimeout(() => setBooted(true), 55000);
+    return () => clearTimeout(fallback);
   }, [booted, setBooted]);
+
+  const handleVideoEnd = () => {
+    setVideoEnded(true);
+    // Show FRIDAY logo for 2 seconds, then boot
+    setTimeout(() => setBooted(true), 2000);
+  };
 
   return (
     <AnimatePresence>
@@ -28,57 +27,50 @@ export default function BootSequence() {
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.8 }}
-          className="fixed inset-0 z-[1000] bg-black flex items-center justify-center"
+          transition={{ duration: 1.0 }}
+          className="fixed inset-0 z-[1000] bg-black overflow-hidden"
         >
-          <div className="relative flex flex-col items-center">
-            {/* Particle ring converging */}
-            <div className="relative w-32 h-32 mb-10">
-              <motion.div
-                className="absolute inset-0 rounded-full border border-white/20"
-                initial={{ scale: 2.5, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 1.2, ease: "easeOut" }}
-              />
-              <motion.div
-                className="absolute inset-0 rounded-full border border-white/40"
-                initial={{ scale: 1.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 1.0, delay: 0.2, ease: "easeOut" }}
-              />
-              <motion.div
-                className="absolute inset-0 rounded-full"
-                style={{
-                  background: "radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%)",
-                }}
-                animate={{ opacity: [0.3, 0.8, 0.3] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <motion.span
-                  initial={{ opacity: 0, letterSpacing: "0.5em" }}
-                  animate={{ opacity: 1, letterSpacing: "0.25em" }}
-                  transition={{ duration: 1.0, delay: 0.5 }}
-                  className="text-white/90 text-sm font-light tracking-widest"
-                >
-                  F.R.I.D.A.Y.
-                </motion.span>
+          {/* Boot video */}
+          <motion.video
+            ref={videoRef}
+            src="/boot.mp4"
+            autoPlay
+            muted
+            playsInline
+            onEnded={handleVideoEnd}
+            initial={{ opacity: 1 }}
+            animate={{ opacity: videoEnded ? 0 : 1 }}
+            transition={{ duration: 1.5 }}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+
+          {/* FRIDAY logo fade-in after video */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{
+              opacity: videoEnded ? 1 : 0,
+              scale: videoEnded ? 1 : 0.95,
+            }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            className="absolute inset-0 flex items-center justify-center bg-black"
+          >
+            <div className="text-center">
+              <div className="text-white/90 text-2xl font-mono tracking-[0.4em] mb-4">
+                F.R.I.D.A.Y.
+              </div>
+              <div className="text-white/40 text-xs font-mono tracking-[0.2em]">
+                LOCAL AI MISSION CONTROL
               </div>
             </div>
+          </motion.div>
 
-            {/* Thin progress bar */}
-            <div className="w-48 h-px bg-white/10 relative overflow-hidden">
-              <motion.div
-                className="absolute inset-y-0 left-0 bg-white/60"
-                initial={{ width: "0%" }}
-                animate={{ width: `${progress}%` }}
-                transition={{ duration: 0.1 }}
-              />
-            </div>
-            <span className="text-white/30 text-[10px] tracking-widest mt-4 font-mono">
-              {progress}%
-            </span>
-          </div>
+          {/* Skip button */}
+          <button
+            onClick={() => setBooted(true)}
+            className="absolute bottom-6 right-6 text-white/30 text-xs font-mono hover:text-white/60 transition-colors"
+          >
+            SKIP ▸
+          </button>
         </motion.div>
       )}
     </AnimatePresence>

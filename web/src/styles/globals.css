@@ -1,4 +1,4 @@
-@tailwind base;
+﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -8,14 +8,14 @@
    ────────────────────────────────────────────────────────────────────── */
 
 :root {
-  --friday-cyan:   #ffffff;
-  --friday-aqua:   #d4d4d4;
-  --friday-ice:    #f5f5f5;
+  --friday-cyan: #ffffff;
+  --friday-aqua: #d1d1d6;
+  --friday-ice: #f5f5f7;
   --friday-violet: #a3a3a3;
   --friday-glow:   rgba(255, 255, 255, 0.5);
   --friday-glow-soft: rgba(255, 255, 255, 0.12);
-  --ink:           #000000;
-  --ink-2:         #0a0a0a;
+  --ink: #000000;
+  --ink-2: #0a0a0a;
 
   --glass-bg:        rgba(0, 0, 0, 0.65);
   --glass-bg-strong: rgba(0, 0, 0, 0.75);
@@ -42,11 +42,11 @@ html, body, #root { height: 100%; width: 100%; }
 body {
   background: var(--ink);
   color: var(--friday-ice);
-  font-family: "Inter", -apple-system, "SF Pro Display", system-ui, sans-serif;
-  font-feature-settings: "ss01", "cv11", "tnum";
-  letter-spacing: -0.01em;
+  font-family: "JetBrains Mono", "Fira Code", "Consolas", monospace;
+  font-feature-settings: "tnum";
+  letter-spacing: 0.02em;
   overflow: hidden;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 /* ── Aurora world background ─────────────────────────────────────────────
@@ -64,7 +64,7 @@ body::after {
   content: "";
   position: fixed; inset: 0;
   background-image:
-    radial-gradient(circle at 1px 1px, rgba(255,255,255,0.12) 1px, transparent 0);
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0);
   background-size: 4px 4px;
   opacity: 0.6;
   z-index: -2;
@@ -102,15 +102,12 @@ body::after {
      across top edge for that "wet glass" feel.                          */
   .holo-panel {
     position: relative;
-    background: rgba(20, 20, 22, 0.72);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
-    box-shadow:
-      0 1px 0 0 rgba(255,255,255,0.06) inset,
-      0 8px 32px -8px rgba(0,0,0,0.6),
-      0 24px 64px -24px rgba(0,0,0,0.8);
+    background: rgba(28, 28, 30, 0.72);
+    /* no blur */
+    /* no blur */
+    border: 1px dashed rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    box-shadow: none;
     overflow: hidden;
     isolation: isolate;
   }
@@ -150,10 +147,10 @@ body::after {
   .holo-frame {
     position: relative;
     background: rgba(14, 24, 42, 0.32);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    /* no blur */
+    /* no blur */
     border: 1px solid rgba(255,255,255, 0.10);
-    border-radius: 12px;
+    border-radius: 2px;
     box-shadow:
       0 1px 0 0 rgba(255,255,255,0.04) inset,
       0 4px 16px -4px rgba(0,0,0,0.4);
@@ -184,11 +181,11 @@ body::after {
   /* ── Rim glow tile (media bay) ──────────────────────────────────── */
   .rim-glow {
     position: relative;
-    border-radius: 12px;
+    border-radius: 2px;
     border: 1px solid rgba(255,255,255, 0.12);
     background: rgba(8, 16, 30, 0.35);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    /* no blur */
+    /* no blur */
     box-shadow:
       0 1px 0 0 rgba(255,255,255,0.04) inset,
       0 0 0 1px rgba(255,255,255,0.04) inset,
@@ -512,7 +509,7 @@ body::after {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255,255,255, 0.10);
-  border-radius: 12px;
+  border-radius: 2px;
   box-shadow: 0 1px 0 0 rgba(255,255,255,0.04) inset;
 }
 
@@ -581,7 +578,7 @@ body::after {
   display: block;
   max-width: 100%;
   height: auto;
-  border-radius: 12px;
+  border-radius: 2px;
   border: 1px solid rgba(255,255,255, 0.16);
   margin: 1.4em auto;
 }
@@ -619,7 +616,7 @@ body::after {
   padding: 0.15em 0.4em;
   background: rgba(255,255,255, 0.10);
   border: 1px solid rgba(255,255,255, 0.20);
-  border-radius: 4px;
+  border-radius: 12px;
   color: #a5f3fc;
 }
 .reader-body pre {
@@ -668,4 +665,37 @@ body::after {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
+}
+
+/* ── Hover glow enhancement ────────────────────────────────────────── */
+button, .glass-chip {
+  transition: all 0.2s ease;
+}
+button:hover, .glass-chip:hover {
+  box-shadow: 0 0 20px rgba(255,255,255,0.15);
+}
+
+/* ── Panel open animation ───────────────────────────────────────────── */
+@keyframes panel_slide_in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.holo-panel {
+  animation: panel_slide_in 0.3s ease-out;
+}
+/* ── Spring button press effect ─────────────────────────────────────── */
+button {
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, background 0.2s ease;
+}
+button:active {
+  transform: scale(0.96);
+}
+
+/* ── Panel hover lift ───────────────────────────────────────────────── */
+.holo-panel {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.holo-panel:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
